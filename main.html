@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Random Quote Machine</title>
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+  <style>
+    body {
+      background-color: #282c34;
+      color: white;
+      font-family: 'Helvetica Neue', sans-serif;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #quote-box {
+      background: white;
+      color: #333;
+      padding: 2rem;
+      max-width: 600px;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    #text {
+      font-size: 1.5rem;
+    }
+
+    #author {
+      text-align: right;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    .buttons {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    #new-quote {
+      background-color: #007bff;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #tweet-quote {
+      color: white;
+      background-color: #1da1f2;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    #tweet-quote:hover, #new-quote:hover {
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const quotes = [
+      { text: "Life isn’t about getting and having, it’s about giving and being.", author: "Kevin Kruse" },
+      { text: "Whatever the mind of man can conceive and believe, it can achieve.", author: "Napoleon Hill" },
+      { text: "Strive not to be a success, but rather to be of value.", author: "Albert Einstein" },
+      { text: "You miss 100% of the shots you don’t take.", author: "Wayne Gretzky" },
+      { text: "Every strike brings me closer to the next home run.", author: "Babe Ruth" },
+      { text: "Definiteness of purpose is the starting point of all achievement.", author: "W. Clement Stone" },
+      { text: "We become what we think about.", author: "Earl Nightingale" }
+    ];
+
+    function getRandomQuote() {
+      return quotes[Math.floor(Math.random() * quotes.length)];
+    }
+
+    const App = () => {
+      const [quote, setQuote] = React.useState(getRandomQuote());
+
+      const handleNewQuote = () => {
+        setQuote(getRandomQuote());
+      };
+
+      const tweetHref = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`"${quote.text}" - ${quote.author}`)}`;
+
+      return (
+        <div id="quote-box">
+          <div id="text">"{quote.text}"</div>
+          <div id="author">- {quote.author}</div>
+          <div className="buttons">
+            <a
+              id="tweet-quote"
+              href={tweetHref}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Tweet
+            </a>
+            <button id="new-quote" onClick={handleNewQuote}>
+              New Quote
+            </button>
+          </div>
+        </div>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
